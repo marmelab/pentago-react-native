@@ -30,3 +30,17 @@ export const getGame = (id) => {
 export const getGames = () => {
   return api.get("/games");
 };
+
+export const addMarble = (gameId, playerId, position) => {
+  return api.post(`/games/${gameId}/addMarble`, {
+    playerId,
+    position,
+  });
+};
+
+export const rotateQuarter = (gameId, playerId, rotation) => {
+  return api.post(`/games/${gameId}/rotateQuarter`, {
+    playerId,
+    rotation,
+  });
+};

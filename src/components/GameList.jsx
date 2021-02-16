@@ -20,7 +20,7 @@ const GameItem = ({ game, navigation }) => {
       })
       .catch((e) => {
         console.error(e);
-        Alert.alert("Canno't join game");
+        Alert.alert("Can't join game");
       });
   };
 
