@@ -1,10 +1,10 @@
 import React from "react";
 
 import { StyleSheet } from "react-native";
-import { useTheme, Title as RNPTitle } from "react-native-paper";
+import { useTheme, Title as PaperTitle } from "react-native-paper";
 
 const Title = ({ children, style }) => {
-  return <RNPTitle style={[styles.title, style]}>{children}</RNPTitle>;
+  return <PaperTitle style={[styles.title, style]}>{children}</PaperTitle>;
 };
 
 const styles = StyleSheet.create({

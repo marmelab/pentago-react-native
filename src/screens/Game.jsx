@@ -3,7 +3,6 @@ import { StyleSheet, View, SafeAreaView, Alert } from "react-native";
 
 import { getGame } from "../utils/api";
 
-import Board from "../components/Board";
 import Title from "../components/Title";
 
 const GameScreen = ({ route }) => {

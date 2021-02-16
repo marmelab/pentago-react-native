@@ -1,15 +1,8 @@
 import "react-native-gesture-handler";
 
 import * as React from "react";
-import {
-  NavigationContainer,
-  DarkTheme as NavigationDarkTheme,
-} from "@react-navigation/native";
-import {
-  DarkTheme as PaperDarkTheme,
-  Provider as PaperProvider,
-  Appbar,
-} from "react-native-paper";
+import { NavigationContainer } from "@react-navigation/native";
+import { Provider as PaperProvider, Appbar } from "react-native-paper";
 
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -17,31 +10,10 @@ import LoginScreen from "./src/screens/Login.jsx";
 import HomeScreen from "./src/screens/Home.jsx";
 import GameScreen from "./src/screens/Game.jsx";
 import LobbyScreen from "./src/screens/Lobby.jsx";
-import { screensEnabled } from "react-native-screens";
+
+import theme from "./theme";
 
 const Stack = createStackNavigator();
-
-const CombinedDarkTheme = {
-  ...PaperDarkTheme,
-  ...NavigationDarkTheme,
-  colors: {
-    ...PaperDarkTheme.colors,
-    ...NavigationDarkTheme.colors,
-    primary: "#fed766",
-    secondary: "#78daea",
-    accent: "#78daea",
-    background: "#333333",
-    board: "#dcdfe5",
-    surface: "#1f1f1f",
-    error: "#78daea",
-    text: "white",
-    onBackground: "#333333",
-    onSurface: "#333333",
-    disabled: "#33333380",
-    placeholder: "#ffffff50",
-    notification: "red",
-  },
-};
 
 function CustomNavigationBar({ navigation, previous, scene }) {
   return (
@@ -54,8 +26,8 @@ function CustomNavigationBar({ navigation, previous, scene }) {
 
 export default function App() {
   return (
-    <PaperProvider theme={CombinedDarkTheme}>
-      <NavigationContainer theme={CombinedDarkTheme}>
+    <PaperProvider theme={theme}>
+      <NavigationContainer theme={theme}>
         <Stack.Navigator
           initialRouteName="Login"
           screenOptions={{
