@@ -12,7 +12,6 @@ export const loginOrCreate = (name) => {
 };
 
 export const createGame = (playerId) => {
-  console.log(playerId);
   return api.post("/games", {
     playerId,
   });

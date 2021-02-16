@@ -13,7 +13,6 @@ import { player } from "../utils/storage";
 
 const HomeScreen = ({ navigation }) => {
   const handleCreateGame = () => {
-    console.log(player);
     createGame(player.id)
       .then((res) => {
         navigation.navigate("Game", { id: res.data.id });

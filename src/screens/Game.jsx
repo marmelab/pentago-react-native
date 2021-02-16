@@ -13,8 +13,8 @@ import { getGame } from "../utils/api";
 const GameScreen = ({ navigation, route }) => {
   const [game, setGame] = useState();
 
-  const handleGetGame = useCallback(
-    (id) => {
+  useEffect(() => {
+    const handleGetGame = (id) => {
       getGame(id)
         .then((res) => {
           setGame(res.data);
@@ -23,11 +23,8 @@ const GameScreen = ({ navigation, route }) => {
           console.error(e);
           Alert.alert("Game not found");
         });
-    },
-    [route.params.id]
-  );
+    };
 
-  useEffect(() => {
     handleGetGame(route.params.id);
 
     const interval = setInterval(() => {
