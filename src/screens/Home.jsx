@@ -1,14 +1,22 @@
-import React, { useState } from "react";
-import { StyleSheet, View, SafeAreaView, Alert } from "react-native";
+import React, { useContext, useState } from "react";
+import {
+  StyleSheet,
+  Button,
+  View,
+  SafeAreaView,
+  Alert,
+  TextInput,
+} from "react-native";
+import { PlayerContext } from "../providers/PlayerProvider";
 
 import { Button, useTheme } from "react-native-paper";
 
 import { createGame } from "../utils/api";
-import { player } from "../utils/storage";
 
 import Title from "../components/Title";
 
 const HomeScreen = ({ navigation }) => {
+  const [player] = useContext(PlayerContext);
   const { colors } = useTheme();
   const [creatingGame, setCreatingGame] = useState(false);
   const handleCreateGame = async () => {

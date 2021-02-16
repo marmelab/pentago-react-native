@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { FlatList, View, StyleSheet } from "react-native";
@@ -8,9 +8,10 @@ import { Button, Divider, Title, Caption, useTheme } from "react-native-paper";
 import { format, fromUnixTime } from "date-fns";
 
 import { joinGame } from "../utils/api";
-import { player } from "../utils/storage";
+import { PlayerContext } from "../providers/PlayerProvider";
 
 const GameItem = ({ game, navigation }) => {
+  const [player] = useContext(PlayerContext);
   const { colors } = useTheme();
   const handleJoinGame = () => {
     joinGame(game.id, player.id)

@@ -1,18 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, View, SafeAreaView, Alert } from "react-native";
-import { Button, TextInput } from "react-native-paper";
+import React, { useState, useEffect, useContext } from "react";
+import {
+  StyleSheet,
+  Button,
+  View,
+  SafeAreaView,
+  Alert,
+  TextInput,
+} from "react-native";
 
 import { loginOrCreate } from "../utils/api";
 import { storePlayer, getPlayerFromStorage } from "../utils/storage";
 import Title from "../components/Title";
 
+import { PlayerContext } from "../providers/PlayerProvider";
+
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
+  const [player, setPlayer] = useContext(PlayerContext);
 
   const savePlayer = (player) => {
     storePlayer(player)
-      .then(() => {
-        navigation.navigate("Home", { player });
+      .then((res) => {
+        setPlayer(res.data);
+        navigation.navigate("Home");
       })
       .catch((e) => {
         console.error(e);
@@ -33,7 +43,8 @@ const LoginScreen = ({ navigation }) => {
   useEffect(() => {
     getPlayerFromStorage().then((player) => {
       if (player && player.id) {
-        navigation.navigate("Home", { player });
+        setPlayer(player);
+        navigation.navigate("Home");
       }
     });
   }, [navigation]);

@@ -6,6 +6,7 @@ import { Provider as PaperProvider, Appbar } from "react-native-paper";
 
 import { createStackNavigator } from "@react-navigation/stack";
 
+import PlayerProvider from "./src/providers/PlayerProvider.jsx";
 import LoginScreen from "./src/screens/Login.jsx";
 import HomeScreen from "./src/screens/Home.jsx";
 import GameScreen from "./src/screens/Game.jsx";
@@ -26,36 +27,38 @@ function CustomNavigationBar({ navigation, previous, scene }) {
 
 export default function App() {
   return (
-    <PaperProvider theme={theme}>
-      <NavigationContainer theme={theme}>
-        <Stack.Navigator
-          initialRouteName="Login"
-          screenOptions={{
-            header: (props) => <CustomNavigationBar {...props} />,
-          }}
-        >
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{ title: "Pentago log-in" }}
-          />
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{ title: "Pentaghome" }}
-          />
-          <Stack.Screen
-            name="Game"
-            component={GameScreen}
-            options={{ title: "Play" }}
-          />
-          <Stack.Screen
-            name="Lobby"
-            component={LobbyScreen}
-            options={{ title: "Lobby" }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
+    <PlayerProvider>
+      <PaperProvider theme={theme}>
+        <NavigationContainer theme={theme}>
+          <Stack.Navigator
+            initialRouteName="Login"
+            screenOptions={{
+              header: (props) => <CustomNavigationBar {...props} />,
+            }}
+          >
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{ title: "Pentago log-in" }}
+            />
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{ title: "Pentaghome" }}
+            />
+            <Stack.Screen
+              name="Game"
+              component={GameScreen}
+              options={{ title: "Play" }}
+            />
+            <Stack.Screen
+              name="Lobby"
+              component={LobbyScreen}
+              options={{ title: "Lobby" }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
+    </PlayerProvider>
   );
 }
