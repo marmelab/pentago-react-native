@@ -36,9 +36,8 @@ const GameScreen = ({ route }) => {
       {game && (
         <>
           {game.player1 && game.player2 ? (
-              <>
-                <Text>Welcome both !</Text>
-                <Text>
+            <>
+              <Text>Welcome both !</Text>
             </>
           ) : (
             <Title>You are alone...</Title>
