@@ -1,43 +1,53 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  Button,
-  View,
-  SafeAreaView,
-  Alert,
-  TextInput,
-} from "react-native";
+import { StyleSheet, View, SafeAreaView, Alert } from "react-native";
+
+import { Button, useTheme } from "react-native-paper";
 
 import { createGame } from "../utils/api";
 import { player } from "../utils/storage";
 
+import Title from "../components/Title";
+
 const HomeScreen = ({ navigation }) => {
-  const handleCreateGame = () => {
-    createGame(player.id)
-      .then((res) => {
-        navigation.navigate("Game", { id: res.data.id });
-      })
-      .catch((e) => {
-        console.error(e);
-        Alert.alert("Game has not been created");
-      });
+  const { colors } = useTheme();
+  const [creatingGame, setCreatingGame] = useState(false);
+  const handleCreateGame = async () => {
+    setCreatingGame(true);
+    try {
+      const res = await createGame(player.id);
+      navigation.navigate("Game", { id: res.data.id });
+    } catch (e) {
+      console.error(e);
+      Alert.alert("Game has not been created");
+    } finally {
+      setCreatingGame(false);
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <View>
+        <Title>Ready to aligned marbles ?</Title>
         <Button
-          title="Create new game"
           onPress={handleCreateGame}
           style={styles.button}
-        />
+          loading={creatingGame}
+          icon="plus"
+          mode="contained"
+        >
+          Create new game
+        </Button>
         <Button
-          title="Join existing one"
           onPress={() => {
             navigation.navigate("Lobby");
           }}
           style={styles.button}
-        />
+          color={colors.secondary}
+          icon="send"
+          mode="contained"
+        >
+          Join existing one
+        </Button>
       </View>
     </SafeAreaView>
   );

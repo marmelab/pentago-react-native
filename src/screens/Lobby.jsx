@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Button,
@@ -11,8 +11,9 @@ import {
 import { getGames } from "../utils/api";
 
 import GameList from "../components/GameList";
+import Title from "../components/Title";
 
-const GameScreen = ({ navigation, route }) => {
+const LobyScreen = () => {
   const [games, setGames] = useState();
 
   useEffect(() => {
@@ -25,6 +26,7 @@ const GameScreen = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View>
+        <Title>Games are waiting you !</Title>
         <GameList games={games}></GameList>
       </View>
     </SafeAreaView>
@@ -39,4 +41,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GameScreen;
+export default LobyScreen;
