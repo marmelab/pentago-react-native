@@ -16,6 +16,14 @@ Docker is installed on your machine.
 make install
 ```
 
+Then generate env file by typing :
+
+```bash
+make init-env
+```
+
+Check informations in the `.env` file.
+
 ## Usage
 
 ```bash

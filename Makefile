@@ -11,6 +11,5 @@ install: ## Install project's dependencies
 start: ## Start project
 	npm start
 
-lint:
-	npm run lint
-
+init-env: ## Create .env for your purpose.
+	cp -n ./.env.example .env
