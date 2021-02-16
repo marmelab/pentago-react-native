@@ -5,6 +5,8 @@ import { FlatList, View, StyleSheet } from "react-native";
 
 import { Button, Divider, Title, Caption, useTheme } from "react-native-paper";
 
+import { format, fromUnixTime } from "date-fns";
+
 import { joinGame } from "../utils/api";
 import { player } from "../utils/storage";
 
@@ -27,7 +29,8 @@ const GameItem = ({ game, navigation }) => {
         <View style={styles.itemTitles}>
           <Title>Play with {game.player1.name}</Title>
           <Caption>
-            Created {new Date(game.created.timestamp).toLocaleString()}
+            Created{" "}
+            {format(fromUnixTime(game.created.timestamp), "dd/MM/yyyy HH:mm")}
           </Caption>
         </View>
         <Button
