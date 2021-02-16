@@ -1,7 +1,9 @@
+import "dotenv/config";
+import { processColor } from "react-native";
 import axios from "redaxios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: process.env.API_URL,
 });
 
 export const loginOrCreate = (name) => {

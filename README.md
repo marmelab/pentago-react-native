@@ -16,6 +16,10 @@ Docker is installed on your machine.
 make install
 ```
 
+```bash
+make init-env
+```
+
 ## Usage
 
 ```bash
