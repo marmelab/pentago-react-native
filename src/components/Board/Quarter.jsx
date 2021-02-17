@@ -23,14 +23,15 @@ const Quarter = ({ quarterIndex, game }) => {
         return colors.primary;
       case 2:
         return colors.secondary;
+      default:
+        return "white";
     }
-
-    return "white";
   };
 
   const extractQuarterFromBoard = () => {
     switch (quarterIndex) {
       case 0:
+      default:
         return game.board.slice(0, 3).map((row) => row.slice(0, 3));
       case 1:
         return game.board.slice(0, 3).map((row) => row.slice(3, 6));
@@ -44,6 +45,7 @@ const Quarter = ({ quarterIndex, game }) => {
   const convertQuarterPositionIntoBoardPosition = (quarterIndex, position) => {
     switch (quarterIndex) {
       case 0:
+      default:
         return position;
       case 1:
         return [position[0], position[1] + 3];
