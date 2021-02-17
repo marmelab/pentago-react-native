@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { StyleSheet, View } from "react-native";
 import { Subheading, useTheme } from "react-native-paper";
@@ -13,7 +13,7 @@ import {
 import { PlayerContext } from "../providers/PlayerProvider";
 
 const GameScreen = ({ game }) => {
-  const [player] = useContect(PlayerContext);
+  const [player] = useContext(PlayerContext);
   const { colors } = useTheme();
 
   const renderTitles = () => {

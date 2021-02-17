@@ -9,7 +9,7 @@ import {
 } from "../../constants/game";
 
 import { addMarble, rotateQuarter } from "../../utils/api";
-import { PlayerContext } from "../providers/PlayerProvider";
+import { PlayerContext } from "../../providers/PlayerProvider";
 
 import RotationOverlay from "./RotationOverlay";
 
