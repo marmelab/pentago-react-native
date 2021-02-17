@@ -4,6 +4,8 @@ import { getGame, addMarble, rotateQuarter } from "../utils/api";
 
 import HeaderGame from "../components/HeaderGame.jsx";
 import Board from "../components/Board/Board.jsx";
+import Advice from "../components/Board/Advice.jsx";
+
 import {
   GAME_FINISHED,
   GAME_STARTED,
@@ -92,6 +94,7 @@ const GameScreen = ({ route }) => {
               onRotate={handleRotate}
             />
           )}
+          <Advice gameId={game.id} gameState={game.state} />
         </>
       )}
     </SafeAreaView>

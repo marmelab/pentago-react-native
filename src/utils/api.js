@@ -47,3 +47,9 @@ export const rotateQuarter = (gameId, playerId, rotation) => {
     rotation,
   });
 };
+
+export const getAdvice = (gameId, playerId) => {
+  return api.get(`/games/${gameId}/advice`, {
+    playerId,
+  });
+};
