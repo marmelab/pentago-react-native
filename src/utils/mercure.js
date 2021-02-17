@@ -3,7 +3,6 @@ import { API_URL, MERCURE_PUBLISH_URL } from "@env";
 let eventSource = {};
 
 export const listenGameEvent = (gameId, callback) => {
-  console.log("LAUNCH LISTENER");
   // URL is a built-in JavaScript class to manipulate URLs
   const url = new URL(MERCURE_PUBLISH_URL);
   url.searchParams.append("topic", `${API_URL}/games/${gameId}`);
