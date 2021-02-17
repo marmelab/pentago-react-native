@@ -12,13 +12,15 @@ const Quarter = ({ index, board }) => {
         return colors.primary;
       case 2:
         return colors.secondary;
+      default:
+        return "white";
     }
-
-    return "white";
   };
+
   const getQuarter = (index) => {
     switch (index) {
       case 1:
+      default:
         return board.slice(0, 3).map((row) => row.slice(0, 3));
       case 2:
         return board.slice(0, 3).map((row) => row.slice(3, 6));

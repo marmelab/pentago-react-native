@@ -1,12 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  StyleSheet,
-  Button,
-  View,
-  SafeAreaView,
-  Alert,
-  TextInput,
-} from "react-native";
+import { StyleSheet, View, SafeAreaView, Alert } from "react-native";
+import { Button, TextInput } from "react-native-paper";
 
 import { loginOrCreate } from "../utils/api";
 import { storePlayer, getPlayerFromStorage } from "../utils/storage";
@@ -20,8 +14,8 @@ const LoginScreen = ({ navigation }) => {
 
   const savePlayer = (player) => {
     storePlayer(player)
-      .then((res) => {
-        setPlayer(res.data);
+      .then(() => {
+        setPlayer(player);
         navigation.navigate("Home");
       })
       .catch((e) => {
