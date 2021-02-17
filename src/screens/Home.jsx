@@ -1,12 +1,5 @@
 import React, { useContext, useState } from "react";
-import {
-  StyleSheet,
-  Button,
-  View,
-  SafeAreaView,
-  Alert,
-  TextInput,
-} from "react-native";
+import { StyleSheet, View, SafeAreaView, Alert } from "react-native";
 import { PlayerContext } from "../providers/PlayerProvider";
 
 import { Button, useTheme } from "react-native-paper";

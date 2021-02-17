@@ -4,6 +4,7 @@ import { StyleSheet, View, SafeAreaView, Alert } from "react-native";
 import { getGame } from "../utils/api";
 
 import Title from "../components/Title";
+import Board from "../components/Board";
 
 const GameScreen = ({ route }) => {
   const [game, setGame] = useState();
@@ -36,7 +37,8 @@ const GameScreen = ({ route }) => {
         <>
           {game.player1 && game.player2 ? (
             <>
-              <Text>Welcome both !</Text>
+              <Title>This is {game.currentPlayer.name}'s turn</Title>
+              <Board board={game.board} />
             </>
           ) : (
             <Title>You are alone...</Title>
