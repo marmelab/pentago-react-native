@@ -59,7 +59,6 @@ const Quarter = ({ quarterIndex, game, onAddMarble, onRotate }) => {
   };
 
   const handleRotate = (rotate) => {
-    console.log("ROTATE", rotate + quarterIndex * 2);
     onRotate(rotate + quarterIndex * 2);
   };
 

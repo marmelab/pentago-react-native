@@ -45,7 +45,6 @@ const GameScreen = ({ route }) => {
   };
 
   const handleRotate = async (rotation) => {
-    console.log("HANDLE", rotation);
     try {
       const { data } = await rotateQuarter(game.id, player.id, rotation);
       data.state = getStateStatusFromGame(data);
