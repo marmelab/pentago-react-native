@@ -1,16 +1,11 @@
 import React, { useEffect, useCallback, useState } from "react";
-import {
-  StyleSheet,
-  Button,
-  View,
-  SafeAreaView,
-  Text,
-  Alert,
-} from "react-native";
+import { StyleSheet, View, SafeAreaView, Alert } from "react-native";
 
 import { getGame } from "../utils/api";
 
-const GameScreen = ({ navigation, route }) => {
+import Title from "../components/Title";
+
+const GameScreen = ({ route }) => {
   const [game, setGame] = useState();
 
   useEffect(() => {
@@ -37,22 +32,17 @@ const GameScreen = ({ navigation, route }) => {
   }, [route.params.id]);
   return (
     <SafeAreaView style={styles.container}>
-      <View>
-        {game && (
-          <>
-            {game.player1 && game.player2 ? (
-              <>
-                <Text>Welcome both !</Text>
-                <Text>
-                  {game.player1.name} & {game.player2.name}
-                </Text>
-              </>
-            ) : (
-              <Text>You are alone on {game.id}</Text>
-            )}
-          </>
-        )}
-      </View>
+      {game && (
+        <>
+          {game.player1 && game.player2 ? (
+            <>
+              <Text>Welcome both !</Text>
+            </>
+          ) : (
+            <Title>You are alone...</Title>
+          )}
+        </>
+      )}
     </SafeAreaView>
   );
 };
@@ -60,8 +50,10 @@ const GameScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 8,
+    marginTop: 16,
     marginHorizontal: 16,
+    display: "flex",
+    alignItems: "center",
   },
 });
 

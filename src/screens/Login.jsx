@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Button,
-  View,
-  SafeAreaView,
-  Alert,
-  TextInput,
-} from "react-native";
+import { StyleSheet, View, SafeAreaView, Alert } from "react-native";
+import { Button, TextInput } from "react-native-paper";
 
 import { loginOrCreate } from "../utils/api";
 import { storePlayer, getPlayerFromStorage } from "../utils/storage";
+import Title from "../components/Title";
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
@@ -46,13 +41,15 @@ const LoginScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View>
+        <Title>Login to play !</Title>
         <TextInput
-          style={{ height: 40 }}
-          placeholder="Login"
+          label="Login"
+          value={username}
           onChangeText={(username) => setUsername(username)}
-          defaultValue={username}
         />
-        <Button title="Login" onPress={handleLogin} />
+        <Button mode="contained" onPress={handleLogin} style={styles.button}>
+          Connect
+        </Button>
       </View>
     </SafeAreaView>
   );
@@ -60,9 +57,11 @@ const LoginScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: 8,
-    marginHorizontal: 16,
+    marginTop: "2rem",
+    marginHorizontal: "4rem",
+  },
+  button: {
+    marginTop: "2rem",
   },
 });
 
