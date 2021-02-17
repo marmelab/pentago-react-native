@@ -8,14 +8,11 @@ import {
   ROTATE_QUARTER_STATUS,
 } from "../../constants/game";
 
-import { addMarble, rotateQuarter } from "../../utils/api";
 import { PlayerContext } from "../../providers/PlayerProvider";
 
 import RotationOverlay from "./RotationOverlay";
 
-const Quarter = ({ quarterIndex, game }) => {
-  const [player] = useContext(PlayerContext);
-
+const Quarter = ({ quarterIndex, game, onAddMarble, onRotate }) => {
   const { colors } = useTheme();
   const getColorFromValue = (value) => {
     switch (value) {
@@ -56,23 +53,14 @@ const Quarter = ({ quarterIndex, game }) => {
     }
   };
 
-  const handleAddMarble = async (position) => {
+  const handleAddMarble = (position) => {
     position = convertQuarterPositionIntoBoardPosition(quarterIndex, position);
-    try {
-      await addMarble(game.id, player.id, position);
-    } catch (e) {
-      console.error(e);
-    }
+    onAddMarble(position);
   };
 
-  const handleRotate = async (rotation) => {
-    rotation = rotation + quarterIndex * 2;
-    console.log(rotation);
-    try {
-      await rotateQuarter(game.id, player.id, rotation);
-    } catch (e) {
-      console.error(e);
-    }
+  const handleRotate = (rotate) => {
+    console.log("ROTATE", rotate + quarterIndex * 2);
+    onRotate(rotate + quarterIndex * 2);
   };
 
   return (
@@ -93,7 +81,7 @@ const Quarter = ({ quarterIndex, game }) => {
                 handleAddMarble([indexRow, indexCol]);
               }}
               disabled={game.state !== ADD_MARBLE_STATUS}
-              key={indexCol}
+              key={`${quarterIndex}-${indexRow}-${indexCol}`}
             >
               <View style={styles.cell}>
                 <View
@@ -110,7 +98,7 @@ const Quarter = ({ quarterIndex, game }) => {
         </View>
       ))}
       {game.state === ROTATE_QUARTER_STATUS && (
-        <RotationOverlay handleRotate={handleRotate} />
+        <RotationOverlay onRotate={handleRotate} />
       )}
     </View>
   );

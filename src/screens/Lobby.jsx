@@ -18,8 +18,12 @@ const LobyScreen = () => {
 
   useEffect(() => {
     const handleGetGames = async () => {
-      const res = await getGames();
-      setGames(res.data);
+      try {
+        const res = await getGames();
+        setGames(res.data);
+      } catch (e) {
+        console.error("ERROR", e);
+      }
     };
     handleGetGames();
   }, []);

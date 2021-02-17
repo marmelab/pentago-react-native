@@ -5,6 +5,9 @@ const api = axios.create({
   baseURL: API_URL,
 });
 
+// Used for debugging purpose (i'm sure react native cache this value...)
+console.log(API_URL);
+
 export const loginOrCreate = (name) => {
   return api.post("/login", {
     name,

@@ -1,7 +1,6 @@
-import React, { useEffect, useCallback, useState, useContext } from "react";
-import { StyleSheet, View, SafeAreaView, Alert } from "react-native";
-import { getGame } from "../utils/api";
-import { listenGameEvent, closeConnection } from "../utils/mercure";
+import React, { useEffect, useState, useContext } from "react";
+import { StyleSheet, SafeAreaView, Alert } from "react-native";
+import { getGame, addMarble, rotateQuarter } from "../utils/api";
 
 import HeaderGame from "../components/HeaderGame.jsx";
 import Board from "../components/Board/Board.jsx";
@@ -34,6 +33,26 @@ const GameScreen = ({ route }) => {
 
     return NOT_YOUR_TURN;
   };
+
+  const handleAddMarble = async (position) => {
+    try {
+      const res = await addMarble(game.id, player.id, position);
+      setGame(res.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleRotate = async (rotation) => {
+    console.log("HANDLE", rotation);
+    try {
+      const res = await rotateQuarter(game.id, player.id, rotation);
+      setGame(res.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   useEffect(() => {
     const handleGetGame = (id) => {
       getGame(id)
@@ -50,23 +69,28 @@ const GameScreen = ({ route }) => {
     };
 
     handleGetGame(route.params.id);
-    // // Connect to mercure & refetch game ressource for any change
-    // listenGameEvent(route.params.id, () => {
-    //   handleGetGame(route.params.id);
-    // });
-    // return () => {
-    //   // close connection to Mercure
-    //   closeConnection();
-    // };
-  }, [route.params.id, setGame]);
 
-  useEffect(() => {}, [setGame]);
+    let interval = setInterval(() => {
+      handleGetGame(route.params.id);
+    }, 3000);
+    return () => {
+      // remove interval
+      interval && clearInterval(interval);
+    };
+  }, [route.params.id]);
+
   return (
     <SafeAreaView style={styles.container}>
       {game && (
         <>
           <HeaderGame game={game} />
-          {game.status === GAME_STARTED && <Board game={game} />}
+          {game.status === GAME_STARTED && (
+            <Board
+              game={game}
+              onAddMarble={handleAddMarble}
+              onRotate={handleRotate}
+            />
+          )}
         </>
       )}
     </SafeAreaView>

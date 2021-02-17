@@ -3,7 +3,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { IconButton, useTheme } from "react-native-paper";
 
-const RotationOverlay = ({ handleRotate }) => {
+const RotationOverlay = ({ onRotate }) => {
   const { colors } = useTheme();
 
   return (
@@ -13,7 +13,7 @@ const RotationOverlay = ({ handleRotate }) => {
           icon="rotate-left"
           color={colors.background}
           size={60}
-          onPress={() => handleRotate(0)}
+          onPress={() => onRotate(0)}
         />
       </View>
       <View style={styles.rotationButton}>
@@ -21,7 +21,7 @@ const RotationOverlay = ({ handleRotate }) => {
           icon="rotate-right"
           color={colors.background}
           size={60}
-          onPress={() => handleRotate(1)}
+          onPress={() => onRotate(1)}
         />
       </View>
     </View>
