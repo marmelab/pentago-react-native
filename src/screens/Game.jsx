@@ -36,8 +36,9 @@ const GameScreen = ({ route }) => {
 
   const handleAddMarble = async (position) => {
     try {
-      const res = await addMarble(game.id, player.id, position);
-      setGame(res.data);
+      const { data } = await addMarble(game.id, player.id, position);
+      data.state = getStateStatusFromGame(data);
+      setGame(data);
     } catch (e) {
       console.error(e);
     }
@@ -46,8 +47,9 @@ const GameScreen = ({ route }) => {
   const handleRotate = async (rotation) => {
     console.log("HANDLE", rotation);
     try {
-      const res = await rotateQuarter(game.id, player.id, rotation);
-      setGame(res.data);
+      const { data } = await rotateQuarter(game.id, player.id, rotation);
+      data.state = getStateStatusFromGame(data);
+      setGame(data);
     } catch (e) {
       console.error(e);
     }
