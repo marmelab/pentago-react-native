@@ -10,7 +10,7 @@ const Title = ({ children, style }) => {
 const styles = StyleSheet.create({
   title: {
     textAlign: "center",
-    marginVertical: "1.6rem",
+    marginVertical: 16,
   },
 });
 

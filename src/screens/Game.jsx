@@ -1,6 +1,5 @@
 import React, { useEffect, useCallback, useState, useContext } from "react";
 import { StyleSheet, View, SafeAreaView, Alert } from "react-native";
-
 import { getGame } from "../utils/api";
 import { listenGameEvent, closeConnection } from "../utils/mercure";
 
@@ -51,14 +50,14 @@ const GameScreen = ({ route }) => {
     };
 
     handleGetGame(route.params.id);
-    // Connect to mercure & refetch game ressource for any change
-    listenGameEvent(route.params.id, () => {
-      handleGetGame(route.params.id);
-    });
-    return () => {
-      // close connection to Mercure
-      closeConnection();
-    };
+    // // Connect to mercure & refetch game ressource for any change
+    // listenGameEvent(route.params.id, () => {
+    //   handleGetGame(route.params.id);
+    // });
+    // return () => {
+    //   // close connection to Mercure
+    //   closeConnection();
+    // };
   }, [route.params.id, setGame]);
 
   useEffect(() => {}, [setGame]);

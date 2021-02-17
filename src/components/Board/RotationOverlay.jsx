@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     backgroundColor: "red",
     opacity: 0.5,
-    borderRadius: "8px",
+    borderRadius: 8,
     top: 0,
     left: 0,
     width: "100%",

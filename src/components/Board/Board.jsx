@@ -17,7 +17,7 @@ const Board = ({ game }) => {
 
 const styles = StyleSheet.create({
   board: {
-    marginTop: "2rem",
+    marginTop: 18,
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",

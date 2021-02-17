@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
   },
   button: {
-    display: "block",
     marginTop: 16,
   },
 });

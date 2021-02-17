@@ -62,11 +62,11 @@ const LoginScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: "2rem",
-    marginHorizontal: "4rem",
+    marginTop: 32,
+    marginHorizontal: 18,
   },
   button: {
-    marginTop: "2rem",
+    marginTop: 12,
   },
 });
 

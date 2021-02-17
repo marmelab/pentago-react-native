@@ -119,8 +119,8 @@ const styles = StyleSheet.create({
   quarter: {
     display: "flex",
     flexDirection: "column",
-    margin: "4px",
-    borderRadius: "8px",
+    margin: 4,
+    borderRadius: 8,
     position: "relative",
   },
   row: {
@@ -130,16 +130,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   cell: {
-    width: "50px",
-    height: "50px",
+    width: 50,
+    height: 50,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
   },
   marble: {
-    width: "40px",
-    height: "40px",
-    borderRadius: "100%",
+    width: 40,
+    height: 40,
+    borderRadius: 100,
   },
 });
 

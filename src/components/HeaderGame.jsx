@@ -62,7 +62,7 @@ const GameScreen = ({ game }) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: "100px",
+    height: 100,
   },
 });
 
