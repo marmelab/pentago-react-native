@@ -1,19 +1,67 @@
-import React, { useEffect, useCallback, useState } from "react";
-import { StyleSheet, View, SafeAreaView, Alert } from "react-native";
+import React, { useEffect, useState, useContext } from "react";
+import { StyleSheet, SafeAreaView, Alert } from "react-native";
+import { getGame, addMarble, rotateQuarter } from "../utils/api";
 
-import { getGame } from "../utils/api";
-
-import Title from "../components/Title";
-import Board from "../components/Board";
+import HeaderGame from "../components/HeaderGame.jsx";
+import Board from "../components/Board/Board.jsx";
+import {
+  GAME_FINISHED,
+  GAME_STARTED,
+  GAME_WAITING_OPPONENT,
+  NOT_YOUR_TURN,
+} from "../constants/game";
+import { PlayerContext } from "../providers/PlayerProvider";
 
 const GameScreen = ({ route }) => {
+  const [player] = useContext(PlayerContext);
   const [game, setGame] = useState();
+
+  const getStateStatusFromGame = (game) => {
+    // We have so many status & boolean from API.
+    // It will be more readable to convert from unique state constant.
+
+    if (
+      game.status === GAME_WAITING_OPPONENT ||
+      game.status === GAME_FINISHED
+    ) {
+      return game.status;
+    }
+
+    if (game.currentPlayer.id === player.id) {
+      return game.turnStatus;
+    }
+
+    return NOT_YOUR_TURN;
+  };
+
+  const handleAddMarble = async (position) => {
+    try {
+      const { data } = await addMarble(game.id, player.id, position);
+      data.state = getStateStatusFromGame(data);
+      setGame(data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleRotate = async (rotation) => {
+    try {
+      const { data } = await rotateQuarter(game.id, player.id, rotation);
+      data.state = getStateStatusFromGame(data);
+      setGame(data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   useEffect(() => {
     const handleGetGame = (id) => {
       getGame(id)
         .then((res) => {
-          setGame(res.data);
+          const data = res.data;
+
+          data.state = getStateStatusFromGame(data);
+          setGame(data);
         })
         .catch((e) => {
           console.error(e);
@@ -23,25 +71,26 @@ const GameScreen = ({ route }) => {
 
     handleGetGame(route.params.id);
 
-    const interval = setInterval(() => {
+    let interval = setInterval(() => {
       handleGetGame(route.params.id);
-    }, 5000);
-
+    }, 3000);
     return () => {
-      clearInterval(interval);
+      // remove interval
+      interval && clearInterval(interval);
     };
   }, [route.params.id]);
+
   return (
     <SafeAreaView style={styles.container}>
       {game && (
         <>
-          {game.player1 && game.player2 ? (
-            <>
-              <Title>This is {game.currentPlayer.name}'s turn</Title>
-              <Board board={game.board} />
-            </>
-          ) : (
-            <Title>You are alone...</Title>
+          <HeaderGame game={game} />
+          {game.status === GAME_STARTED && (
+            <Board
+              game={game}
+              onAddMarble={handleAddMarble}
+              onRotate={handleRotate}
+            />
           )}
         </>
       )}

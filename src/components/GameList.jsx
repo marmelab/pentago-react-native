@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 
-import { FlatList, View, StyleSheet } from "react-native";
+import { FlatList, View, StyleSheet, Alert } from "react-native";
 
 import { Button, Divider, Title, Caption, useTheme } from "react-native-paper";
 
@@ -20,7 +20,7 @@ const GameItem = ({ game, navigation }) => {
       })
       .catch((e) => {
         console.error(e);
-        Alert.alert("Canno't join game");
+        Alert.alert("Can't join game");
       });
   };
 

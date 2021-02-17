@@ -5,6 +5,9 @@ const api = axios.create({
   baseURL: API_URL,
 });
 
+// Used for debugging purpose (i'm sure react native cache this value...)
+console.log(API_URL);
+
 export const loginOrCreate = (name) => {
   return api.post("/login", {
     name,
@@ -29,4 +32,18 @@ export const getGame = (id) => {
 
 export const getGames = () => {
   return api.get("/games");
+};
+
+export const addMarble = (gameId, playerId, position) => {
+  return api.post(`/games/${gameId}/addMarble`, {
+    playerId,
+    position,
+  });
+};
+
+export const rotateQuarter = (gameId, playerId, rotation) => {
+  return api.post(`/games/${gameId}/rotateQuarter`, {
+    playerId,
+    rotation,
+  });
 };

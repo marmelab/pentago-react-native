@@ -4,7 +4,7 @@ export const storePlayer = (player) => {
   return AsyncStorage.setItem("player", JSON.stringify(player));
 };
 
-export const getPlayerFromStorage = async () => {
+export const getPlayer = async () => {
   const data = await AsyncStorage.getItem("player");
   if (!data) return null;
   return JSON.parse(data);
