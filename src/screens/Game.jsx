@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useCallback, useState, useContext } from "react";
 import { StyleSheet, View, SafeAreaView, Alert } from "react-native";
 
 import { getGame } from "../utils/api";
@@ -12,9 +12,10 @@ import {
   GAME_WAITING_OPPONENT,
   NOT_YOUR_TURN,
 } from "../constants/game";
-import { player } from "../utils/storage";
+import { PlayerContext } from "../providers/PlayerProvider";
 
 const GameScreen = ({ route }) => {
+  const [player] = useContext(PlayerContext);
   const [game, setGame] = useState();
 
   const getStateStatusFromGame = (game) => {

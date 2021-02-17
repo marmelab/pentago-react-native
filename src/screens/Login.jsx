@@ -3,7 +3,7 @@ import { StyleSheet, View, SafeAreaView, Alert } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 
 import { loginOrCreate } from "../utils/api";
-import { storePlayer, getPlayerFromStorage } from "../utils/storage";
+import { storePlayer, getPlayer } from "../utils/storage";
 import Title from "../components/Title";
 
 import { PlayerContext } from "../providers/PlayerProvider";
@@ -35,7 +35,7 @@ const LoginScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    getPlayerFromStorage().then((player) => {
+    getPlayer().then((player) => {
       if (player && player.id) {
         setPlayer(player);
         navigation.navigate("Home");

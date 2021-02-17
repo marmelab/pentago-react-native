@@ -10,9 +10,10 @@ import {
   GAME_WAITING_OPPONENT,
   NOT_YOUR_TURN,
 } from "../constants/game";
-import { player } from "../utils/storage";
+import { PlayerContext } from "../providers/PlayerProvider";
 
 const GameScreen = ({ game }) => {
+  const [player] = useContect(PlayerContext);
   const { colors } = useTheme();
 
   const renderTitles = () => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { StyleSheet, View, TouchableWithoutFeedback } from "react-native";
 import { useTheme } from "react-native-paper";
@@ -9,13 +9,14 @@ import {
 } from "../../constants/game";
 
 import { addMarble, rotateQuarter } from "../../utils/api";
-import { player } from "../../utils/storage";
+import { PlayerContext } from "../providers/PlayerProvider";
 
 import RotationOverlay from "./RotationOverlay";
 
 const Quarter = ({ quarterIndex, game }) => {
-  const { colors } = useTheme();
+  const [player] = useContext(PlayerContext);
 
+  const { colors } = useTheme();
   const getColorFromValue = (value) => {
     switch (value) {
       case 1:
