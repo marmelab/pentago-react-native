@@ -8,6 +8,12 @@ const Board = ({ game, onAddMarble, onRotate }) => {
   return (
     <View style={styles.board}>
       <Quarter
+        quarterIndex={0}
+        game={game}
+        onAddMarble={onAddMarble}
+        onRotate={onRotate}
+      />
+      <Quarter
         quarterIndex={1}
         game={game}
         onAddMarble={onAddMarble}
@@ -21,12 +27,6 @@ const Board = ({ game, onAddMarble, onRotate }) => {
       />
       <Quarter
         quarterIndex={3}
-        game={game}
-        onAddMarble={onAddMarble}
-        onRotate={onRotate}
-      />
-      <Quarter
-        quarterIndex={4}
         game={game}
         onAddMarble={onAddMarble}
         onRotate={onRotate}
