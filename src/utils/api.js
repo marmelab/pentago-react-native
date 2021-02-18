@@ -1,12 +1,12 @@
-import { API_URL } from "@env";
+import Constants from "expo-constants";
 import axios from "redaxios";
 
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: Constants.manifest.extra.API_URL,
 });
 
 // Used for debugging purpose (i'm sure react native cache this value...)
-console.log(API_URL);
+console.log(Constants.manifest.extra.API_URL);
 
 export const loginOrCreate = (name) => {
   return api.post("/login", {
