@@ -27,28 +27,28 @@ const Quarter = ({ quarterIndex, game, onAddMarble, onRotate }) => {
 
   const extractQuarterFromBoard = () => {
     switch (quarterIndex) {
-      case 0:
+      case 1:
       default:
         return game.board.slice(0, 3).map((row) => row.slice(0, 3));
-      case 1:
-        return game.board.slice(0, 3).map((row) => row.slice(3, 6));
       case 2:
-        return game.board.slice(3, 6).map((row) => row.slice(0, 3));
+        return game.board.slice(0, 3).map((row) => row.slice(3, 6));
       case 3:
+        return game.board.slice(3, 6).map((row) => row.slice(0, 3));
+      case 4:
         return game.board.slice(3, 6).map((row) => row.slice(3, 6));
     }
   };
 
   const convertQuarterPositionIntoBoardPosition = (quarterIndex, position) => {
     switch (quarterIndex) {
-      case 0:
+      case 1:
       default:
         return position;
-      case 1:
-        return [position[0], position[1] + 3];
       case 2:
-        return [position[0] + 3, position[1]];
+        return [position[0], position[1] + 3];
       case 3:
+        return [position[0] + 3, position[1]];
+      case 4:
         return [position[0] + 3, position[1] + 3];
     }
   };
