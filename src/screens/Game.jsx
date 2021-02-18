@@ -1,6 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
 import { StyleSheet, SafeAreaView, Alert } from "react-native";
-import { getGame, addMarble, rotateQuarter } from "../utils/api";
+import {
+  getGame,
+  addMarble,
+  rotateQuarter,
+  askComputerToPlay,
+} from "../utils/api";
 
 import HeaderGame from "../components/HeaderGame.jsx";
 import Board from "../components/Board/Board.jsx";
@@ -11,16 +16,24 @@ import {
   GAME_STARTED,
   GAME_WAITING_OPPONENT,
   NOT_YOUR_TURN,
+  YOU_WIN,
+  YOU_LOOSE,
 } from "../constants/game";
 import { PlayerContext } from "../providers/PlayerProvider";
 
 const GameScreen = ({ route }) => {
   const [player] = useContext(PlayerContext);
-  const [game, setGame] = useState();
+  const [game, setGame] = useState({});
 
   const getStateStatusFromGame = (game) => {
     // We have so many status & boolean from API.
     // It will be more readable to convert from unique state constant.
+
+    const currentPlayerValue = player.id === game.player1.id ? 1 : 2;
+
+    if (game.winner) {
+      return currentPlayerValue === game.winner ? YOU_WIN : YOU_LOOSE;
+    }
 
     if (
       game.status === GAME_WAITING_OPPONENT ||
@@ -29,7 +42,7 @@ const GameScreen = ({ route }) => {
       return game.status;
     }
 
-    if (game.currentPlayer.id === player.id) {
+    if (game.currentPlayer?.id === player.id) {
       return game.turnStatus;
     }
 
@@ -70,24 +83,36 @@ const GameScreen = ({ route }) => {
           Alert.alert("Game not found");
         });
     };
-
+    let interval;
     handleGetGame(route.params.id);
-
-    let interval = setInterval(() => {
-      handleGetGame(route.params.id);
-    }, 3000);
+    if (
+      (game.state === NOT_YOUR_TURN || game.state === GAME_WAITING_OPPONENT) &&
+      !game.againstComputer
+    ) {
+      interval = setInterval(() => {
+        handleGetGame(route.params.id);
+      }, 4000);
+    }
     return () => {
       // remove interval
       interval && clearInterval(interval);
     };
-  }, [route.params.id]);
+  }, [route.params.id, game.state]);
+
+  useEffect(() => {
+    if (game?.state === NOT_YOUR_TURN && game.againstComputer) {
+      askComputerToPlay(game.id).then((res) => {
+        setGame(res.data);
+      });
+    }
+  }, [game.state, game.againstComputer]);
 
   return (
     <SafeAreaView style={styles.container}>
       {game && (
         <>
           <HeaderGame game={game} />
-          {game.status === GAME_STARTED && (
+          {(game.status === GAME_STARTED || game.status === GAME_FINISHED) && (
             <Board
               game={game}
               onAddMarble={handleAddMarble}

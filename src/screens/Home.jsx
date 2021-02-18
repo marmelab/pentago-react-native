@@ -12,10 +12,10 @@ const HomeScreen = ({ navigation }) => {
   const [player] = useContext(PlayerContext);
   const { colors } = useTheme();
   const [creatingGame, setCreatingGame] = useState(false);
-  const handleCreateGame = async () => {
+  const handleCreateGame = async (againstComputer) => {
     setCreatingGame(true);
     try {
-      const res = await createGame(player.id);
+      const res = await createGame(player.id, againstComputer);
       navigation.navigate("Game", { id: res.data.id });
     } catch (e) {
       console.error(e);
@@ -30,7 +30,9 @@ const HomeScreen = ({ navigation }) => {
       <View>
         <Title>Ready to aligned marbles ?</Title>
         <Button
-          onPress={handleCreateGame}
+          onPress={() => {
+            handleCreateGame(false);
+          }}
           style={styles.button}
           loading={creatingGame}
           icon="plus"
@@ -48,6 +50,16 @@ const HomeScreen = ({ navigation }) => {
           mode="contained"
         >
           Join existing one
+        </Button>
+        <Button
+          onPress={() => {
+            handleCreateGame(true);
+          }}
+          style={styles.button}
+          color={colors.primary}
+          icon="robot"
+        >
+          Train against computer
         </Button>
       </View>
     </SafeAreaView>
