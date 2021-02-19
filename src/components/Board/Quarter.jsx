@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import { StyleSheet, View, TouchableWithoutFeedback } from "react-native";
 import { useTheme } from "react-native-paper";
@@ -7,8 +7,6 @@ import {
   NOT_YOUR_TURN,
   ROTATE_QUARTER_STATUS,
 } from "../../constants/game";
-
-import { PlayerContext } from "../../providers/PlayerProvider";
 
 import RotationOverlay from "./RotationOverlay";
 

@@ -14,9 +14,10 @@ export const loginOrCreate = (name) => {
   });
 };
 
-export const createGame = (playerId) => {
+export const createGame = (playerId, againstComputer) => {
   return api.post("/games", {
     playerId,
+    againstComputer,
   });
 };
 
@@ -52,4 +53,8 @@ export const getAdvice = (gameId, playerId) => {
   return api.get(`/games/${gameId}/advice`, {
     playerId,
   });
+};
+
+export const askComputerToPlay = (gameId) => {
+  return api.post(`/games/${gameId}/computer/play`);
 };
