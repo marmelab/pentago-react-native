@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { StyleSheet, SafeAreaView, Alert } from "react-native";
+import { StyleSheet, SafeAreaView, Alert, Image } from "react-native";
 import {
   getGame,
   addMarble,
@@ -18,8 +18,11 @@ import {
   NOT_YOUR_TURN,
   YOU_WIN,
   YOU_LOOSE,
+  ADD_MARBLE_STATUS,
 } from "../constants/game";
 import { PlayerContext } from "../providers/PlayerProvider";
+
+import loadingPNG from "../../assets/loading.png";
 
 const GameScreen = ({ route }) => {
   const [player] = useContext(PlayerContext);
@@ -112,6 +115,9 @@ const GameScreen = ({ route }) => {
       {game && (
         <>
           <HeaderGame game={game} />
+          {game.status === GAME_WAITING_OPPONENT && (
+            <Image source={loadingPNG} style={styles.image} />
+          )}
           {(game.status === GAME_STARTED || game.status === GAME_FINISHED) && (
             <Board
               game={game}
@@ -119,7 +125,9 @@ const GameScreen = ({ route }) => {
               onRotate={handleRotate}
             />
           )}
-          <Advice gameId={game.id} gameState={game.state} />
+          {game.state == ADD_MARBLE_STATUS && (
+            <Advice gameId={game.id} gameState={game.state} />
+          )}
         </>
       )}
     </SafeAreaView>
@@ -133,6 +141,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     display: "flex",
     alignItems: "center",
+  },
+  image: {
+    width: "100%",
+    height: 400,
+    margin: "auto",
+    marginVertical: 12,
   },
 });
 

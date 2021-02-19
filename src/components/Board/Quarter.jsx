@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-import { StyleSheet, View, TouchableWithoutFeedback } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback,
+  Animated,
+  Easing,
+} from "react-native";
 import { useTheme } from "react-native-paper";
 import {
   ADD_MARBLE_STATUS,
@@ -10,7 +16,29 @@ import {
 
 import RotationOverlay from "./RotationOverlay";
 
-const Quarter = ({ quarterIndex, game, onAddMarble, onRotate }) => {
+const Quarter = ({
+  quarterIndex,
+  game,
+  onAddMarble,
+  onRotate,
+  handleRotateLoading,
+}) => {
+  let rotateValueHolder = new Animated.Value(1);
+  const startRotateFunction = (rotate) => {
+    rotateValueHolder.setValue(1);
+    Animated.timing(rotateValueHolder, {
+      toValue: rotate,
+      duration: 500,
+      easing: Easing.in,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const rotateData = rotateValueHolder.interpolate({
+    inputRange: [0, 1, 2],
+    outputRange: ["-90deg", "0deg", "90deg"],
+  });
+
   const { colors } = useTheme();
   const getColorFromValue = (value) => {
     switch (value) {
@@ -57,47 +85,62 @@ const Quarter = ({ quarterIndex, game, onAddMarble, onRotate }) => {
   };
 
   const handleRotate = (rotate) => {
-    onRotate(rotate + quarterIndex * 2);
+    startRotateFunction(rotate === 0 ? 0 : 2);
+    setTimeout(() => {
+      onRotate(rotate + quarterIndex * 2);
+    }, 500);
   };
 
+  useEffect(() => {
+    if (game) {
+      rotateValueHolder.setValue(1);
+    }
+  }, [game]);
+
   return (
-    <View
-      style={[
-        styles.quarter,
-        {
-          backgroundColor: colors.board,
-          opacity: game.state === NOT_YOUR_TURN ? 0.5 : 1,
-        },
-      ]}
+    <Animated.View
+      style={{
+        transform: [{ rotate: rotateData }],
+      }}
     >
-      {extractQuarterFromBoard().map((row, indexRow) => (
-        <View style={styles.row} key={indexRow}>
-          {row.map((value, indexCol) => (
-            <TouchableWithoutFeedback
-              onPress={() => {
-                handleAddMarble([indexRow, indexCol]);
-              }}
-              disabled={game.state !== ADD_MARBLE_STATUS}
-              key={`${quarterIndex}-${indexRow}-${indexCol}`}
-            >
-              <View style={styles.cell}>
-                <View
-                  style={[
-                    styles.marble,
-                    {
-                      backgroundColor: getColorFromValue(value),
-                    },
-                  ]}
-                ></View>
-              </View>
-            </TouchableWithoutFeedback>
-          ))}
-        </View>
-      ))}
-      {game.state === ROTATE_QUARTER_STATUS && (
-        <RotationOverlay onRotate={handleRotate} />
-      )}
-    </View>
+      <View
+        style={[
+          styles.quarter,
+          {
+            backgroundColor: colors.board,
+            opacity: game.state === NOT_YOUR_TURN ? 0.5 : 1,
+          },
+        ]}
+      >
+        {extractQuarterFromBoard().map((row, indexRow) => (
+          <View style={styles.row} key={indexRow}>
+            {row.map((value, indexCol) => (
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  handleAddMarble([indexRow, indexCol]);
+                }}
+                disabled={game.state !== ADD_MARBLE_STATUS}
+                key={`${quarterIndex}-${indexRow}-${indexCol}`}
+              >
+                <View style={styles.cell}>
+                  <View
+                    style={[
+                      styles.marble,
+                      {
+                        backgroundColor: getColorFromValue(value),
+                      },
+                    ]}
+                  ></View>
+                </View>
+              </TouchableWithoutFeedback>
+            ))}
+          </View>
+        ))}
+        {game.state === ROTATE_QUARTER_STATUS && !handleRotateLoading && (
+          <RotationOverlay onRotate={handleRotate} />
+        )}
+      </View>
+    </Animated.View>
   );
 };
 const styles = StyleSheet.create({
